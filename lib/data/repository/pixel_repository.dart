@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:years_in_flutter/core/failures.dart';
-import 'package:years_in_flutter/model/pixel.dart';
+
+import '../../core/failures.dart';
+import '../model/pixel.dart';
 
 abstract class PixelRepository {
   //get all the pixels
