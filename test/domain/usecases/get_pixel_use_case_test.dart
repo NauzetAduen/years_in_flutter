@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:years_in_flutter/data/model/pixel.dart';
+import 'package:years_in_flutter/data/model/pixel_state.dart';
 import 'package:years_in_flutter/data/repository/pixel_repository.dart';
 import 'package:years_in_flutter/domain/usecases.dart';
 
@@ -15,7 +16,7 @@ void main() {
     mockPixelRepository = MockPixelRepository();
     getPixelsUseCase = GetPixelsUseCase(mockPixelRepository);
   });
-  List<Pixel> list = [Pixel(note: 0, date: DateTime.now())];
+  List<Pixel> list = [Pixel(note: PixelState.GOOD, date: DateTime.now())];
   test('should get a list of pixels from the repository', () async {
     //
     when(mockPixelRepository.getPixelsList())
