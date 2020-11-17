@@ -12,6 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_bloc:
+  # animated_splash: ^1.0.0 
+  animated_splash_screen: ^1.0.1+2
 
   cupertino_icons: ^1.0.0
 
@@ -22,4 +25,9 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+
+  assets:
+    - assets/splash.png
+    
 
