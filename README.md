@@ -1,6 +1,6 @@
 # years_in_flutter
 
-A new Flutter project to learn the [Stacked](https://pub.dev/packages/stacked) architecture/package.
+A new Flutter project to improve bloc comprehension
 
 
 # original idea
