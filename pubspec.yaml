@@ -13,8 +13,9 @@ dependencies:
     sdk: flutter
 
   flutter_bloc:
-  # animated_splash: ^1.0.0 
   animated_splash_screen: ^1.0.1+2
+  equatable: 
+  dartz:
 
   cupertino_icons: ^1.0.0
 
