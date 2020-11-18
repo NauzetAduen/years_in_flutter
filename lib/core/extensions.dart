@@ -6,7 +6,5 @@ extension FormatedDate on DateTime {
 }
 
 extension SerializedEnum on PixelState {
-  String toJson() {
-    return this.toString().split(".")[1];
-  }
+  String toJson() => this.toString().split(".").last;
 }
