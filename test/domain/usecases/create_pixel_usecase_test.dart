@@ -18,7 +18,7 @@ void main() {
     createPixelUseCase = CreatePixelUseCase(mockPixelRepository);
   });
   Pixel pixel = Pixel(note: PixelState.GOOD, date: DateTime.now());
-  test('should get a list of pixels from the repository', () async {
+  test('should create a new pixel', () async {
     //
     when(mockPixelRepository.createPixel(pixel))
         .thenAnswer((_) async => Right(true));
