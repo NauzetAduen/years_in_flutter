@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:years_in_flutter/core/exceptions.dart';
 import 'package:years_in_flutter/core/network/network_info.dart';
 import 'package:years_in_flutter/data/datasources/pixel_datasource.dart';
 
@@ -26,26 +27,41 @@ class PixelRepositoryImpl implements PixelRepository {
   PixelRepositoryImpl(this.pixelDatasource, this.networkInfo);
 
   @override
-  Future<Either<Failure, bool>> createPixel(Pixel pixel) {
-    // TODO: implement createPixel
-    throw UnimplementedError();
-  }
+  Future<Either<Failure, bool>> createPixel(Pixel pixel) async =>
+      await common(pixelDatasource.createPixel, pixel);
 
   @override
-  Future<Either<Failure, bool>> deletePixel(Pixel pixel) {
-    // TODO: implement deletePixel
-    throw UnimplementedError();
-  }
+  Future<Either<Failure, bool>> deletePixel(Pixel pixel) async =>
+      await common(pixelDatasource.deletePixel, pixel);
 
   @override
-  Future<Either<Failure, List<Pixel>>> getPixelsList() {
-    // TODO: implement getPixelsList
-    throw UnimplementedError();
+  Future<Either<Failure, bool>> updatePixel(Pixel pixel) async =>
+      await common(pixelDatasource.updatePixel, pixel);
+
+  Future<Either<Failure, bool>> common(Function fn, Pixel pixel) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final actionResult = await fn(pixel);
+        return Right(actionResult);
+      } on DatabaseException {
+        return Left(DatabaseFailure());
+      }
+    }
+    return Left(ConectionFailure());
   }
 
+  //TODO
+  //reuse common with List<Pixel>> return type
   @override
-  Future<Either<Failure, bool>> updatePixel(Pixel pixel) {
-    // TODO: implement updatePixel
-    throw UnimplementedError();
+  Future<Either<Failure, List<Pixel>>> getPixelsList() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final listResult = await pixelDatasource.getPixelsList();
+        return Right(listResult);
+      } on DatabaseException {
+        return Left(DatabaseFailure());
+      }
+    }
+    return Left(ConectionFailure());
   }
 }
