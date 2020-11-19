@@ -17,6 +17,7 @@ dependencies:
   equatable: 
   dartz:
   intl:
+  connectivity:
 
   cupertino_icons: ^1.0.0
 
