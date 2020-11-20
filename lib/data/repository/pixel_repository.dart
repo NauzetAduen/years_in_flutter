@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:years_in_flutter/core/exceptions.dart';
-import 'package:years_in_flutter/core/network/network_info.dart';
-import 'package:years_in_flutter/data/datasources/pixel_datasource.dart';
 
+import '../../core/exceptions.dart';
 import '../../core/failures.dart';
+import '../datasources/pixel_datasource.dart';
 import '../model/pixel.dart';
 
 abstract class PixelRepository {
@@ -22,9 +21,8 @@ abstract class PixelRepository {
 
 class PixelRepositoryImpl implements PixelRepository {
   final PixelDatasource pixelDatasource;
-  final NetworkInfo networkInfo;
 
-  PixelRepositoryImpl(this.pixelDatasource, this.networkInfo);
+  PixelRepositoryImpl(this.pixelDatasource);
 
   @override
   Future<Either<Failure, bool>> createPixel(Pixel pixel) async =>
@@ -39,29 +37,23 @@ class PixelRepositoryImpl implements PixelRepository {
       await common(pixelDatasource.updatePixel, pixel);
 
   Future<Either<Failure, bool>> common(Function fn, Pixel pixel) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final actionResult = await fn(pixel);
-        return Right(actionResult);
-      } on DatabaseException {
-        return Left(DatabaseFailure());
-      }
+    try {
+      final actionResult = await fn(pixel);
+      return Right(actionResult);
+    } on DatabaseException {
+      return Left(DatabaseFailure());
     }
-    return Left(ConectionFailure());
   }
 
   //TODO
   //reuse common with List<Pixel>> return type
   @override
   Future<Either<Failure, List<Pixel>>> getPixelsList() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final listResult = await pixelDatasource.getPixelsList();
-        return Right(listResult);
-      } on DatabaseException {
-        return Left(DatabaseFailure());
-      }
+    try {
+      final listResult = await pixelDatasource.getPixelsList();
+      return Right(listResult);
+    } on DatabaseException {
+      return Left(DatabaseFailure());
     }
-    return Left(ConectionFailure());
   }
 }

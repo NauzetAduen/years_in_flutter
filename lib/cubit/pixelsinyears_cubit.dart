@@ -22,8 +22,6 @@ class PixelsinyearsCubit extends Cubit<PixelsinyearsState> {
     list.fold((failure) {
       if (failure is DatabaseFailure)
         emit(PixelsinyearsError(databaseFailureMessage));
-      else if (failure is ConectionFailure)
-        emit(PixelsinyearsError(connectionFailureMessage));
     }, (list) {
       if (list.isEmpty)
         emit(PixelsinyearsLoadedEmpty());
