@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:years_in_flutter/core/failures.dart';
 
 import '../data/model/pixel.dart';
 import '../data/repository/pixel_repository.dart';
@@ -12,21 +11,15 @@ const String connectionFailureMessage = "Not conntected to a network";
 
 class PixelsinyearsCubit extends Cubit<PixelsinyearsState> {
   final PixelRepositoryImpl pixelRepositoryImpl;
-  PixelsinyearsCubit(this.pixelRepositoryImpl) : super(PixelsinyearsInitial());
+  PixelsinyearsCubit(this.pixelRepositoryImpl) : super(PixelsinyearsLoading());
 
   Future<void> getPixelList() async {
     emit(const PixelsinyearsLoading());
-
     final list = await pixelRepositoryImpl.getPixelsList();
 
-    list.fold((failure) {
-      if (failure is DatabaseFailure)
-        emit(PixelsinyearsError(databaseFailureMessage));
-    }, (list) {
-      if (list.isEmpty)
-        emit(PixelsinyearsLoadedEmpty());
-      else
-        emit(PixelsinyearsLoaded(list));
-    });
+    list.fold(
+      (failure) => emit(const PixelsinyearsError(databaseFailureMessage)),
+      (list) => emit(PixelsinyearsLoaded(list)),
+    );
   }
 }

@@ -5,16 +5,8 @@ abstract class PixelsinyearsState {
   const PixelsinyearsState();
 }
 
-class PixelsinyearsInitial extends PixelsinyearsState {
-  const PixelsinyearsInitial();
-}
-
 class PixelsinyearsLoading extends PixelsinyearsState {
   const PixelsinyearsLoading();
-}
-
-class PixelsinyearsLoadedEmpty extends PixelsinyearsState {
-  const PixelsinyearsLoadedEmpty();
 }
 
 class PixelsinyearsLoaded extends PixelsinyearsState {
