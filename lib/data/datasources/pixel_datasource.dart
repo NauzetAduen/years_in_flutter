@@ -50,7 +50,6 @@ class PixelDatasourceImpl implements PixelDatasource {
     //TODO
     //better way to do this?
 
-    print(map);
     map.forEach((key, value) {
       list.add(
         Pixel(

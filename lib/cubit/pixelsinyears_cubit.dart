@@ -7,15 +7,14 @@ import '../data/repository/pixel_repository.dart';
 part 'pixelsinyears_state.dart';
 
 const String databaseFailureMessage = "The database has produced an error";
-const String connectionFailureMessage = "Not conntected to a network";
 
 class PixelsinyearsCubit extends Cubit<PixelsinyearsState> {
-  final PixelRepositoryImpl pixelRepositoryImpl;
-  PixelsinyearsCubit(this.pixelRepositoryImpl) : super(PixelsinyearsLoading());
+  final PixelRepository pixelRepository;
+  PixelsinyearsCubit(this.pixelRepository) : super(PixelsinyearsLoading());
 
   Future<void> getPixelList() async {
     emit(const PixelsinyearsLoading());
-    final list = await pixelRepositoryImpl.getPixelsList();
+    final list = await pixelRepository.getPixelsList();
 
     list.fold(
       (failure) => emit(const PixelsinyearsError(databaseFailureMessage)),
