@@ -12,13 +12,31 @@ class PixelsinyearsCubit extends Cubit<PixelsinyearsState> {
   final PixelRepository pixelRepository;
   PixelsinyearsCubit(this.pixelRepository) : super(PixelsinyearsLoading());
 
+//TODO (1) ADD REST OF FUNCTIONS
   Future<void> getPixelList() async {
     emit(const PixelsinyearsLoading());
-    final list = await pixelRepository.getPixelsList();
+    final result = await pixelRepository.getPixelsList();
 
-    list.fold(
-      (failure) => emit(const PixelsinyearsError(databaseFailureMessage)),
-      (list) => emit(PixelsinyearsLoaded(list)),
-    );
+    result.fold(
+        (failure) => emit(const PixelsinyearsError(databaseFailureMessage)),
+        (list) => emit(PixelsinyearsLoaded(list)));
+  }
+
+  Future<void> updatePixel(Pixel pixel) async {
+    emit(const PixelsinyearsLoading());
+    final result = await pixelRepository.updatePixel(pixel);
+
+    result.fold(
+        (failure) => emit(const PixelsinyearsError(databaseFailureMessage)),
+        (result) => emit(const PixelUpdatedOrCreated()));
+  }
+
+  Future<void> createPixel(Pixel pixel) async {
+    emit(const PixelsinyearsLoading());
+    final result = await pixelRepository.createPixel(pixel);
+
+    result.fold(
+        (failure) => emit(const PixelsinyearsError(databaseFailureMessage)),
+        (result) => emit(const PixelUpdatedOrCreated()));
   }
 }
