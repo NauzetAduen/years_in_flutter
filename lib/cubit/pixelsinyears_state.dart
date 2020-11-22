@@ -9,6 +9,10 @@ class PixelsinyearsLoading extends PixelsinyearsState {
   const PixelsinyearsLoading();
 }
 
+class PixelUpdatedOrCreated extends PixelsinyearsState {
+  const PixelUpdatedOrCreated();
+}
+
 class PixelsinyearsLoaded extends PixelsinyearsState {
   final List<Pixel> pixelList;
   const PixelsinyearsLoaded(this.pixelList);
