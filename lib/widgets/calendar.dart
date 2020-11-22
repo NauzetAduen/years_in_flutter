@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:years_in_flutter/core/colors.dart';
 
 class Calendar extends StatelessWidget {
   @override
@@ -31,11 +34,8 @@ class MonthColumn extends StatelessWidget {
         for (int day = 1; day < 32; day++)
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(2),
-              child: GestureDetector(
-                onTap: () {},
-                child: CustomButton(month: month, day: day),
-              ),
+              padding: const EdgeInsets.all(1),
+              child: CustomButton(month: month, day: day),
             ),
           ),
       ],
@@ -52,15 +52,60 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDayValid = isDateValid(2020, month, day);
-    return GestureDetector(
-      onTap: () {
-        print("$month - $day");
-      },
-      child: Container(
-        color: isDayValid ? Colors.blueAccent : Colors.grey,
-      ),
-    );
+    return isDayValid
+        ? GestureDetector(
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      contentPadding: EdgeInsets.all(10),
+                      title: Text(
+                        "$month - $day",
+                        textAlign: TextAlign.center,
+                      ),
+                      content: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.solidSadTear,
+                            color: awful,
+                            size: 36,
+                          ),
+                          FaIcon(
+                            FontAwesomeIcons.solidFrownOpen,
+                            color: bad,
+                            size: 36,
+                          ),
+                          FaIcon(
+                            FontAwesomeIcons.solidMeh,
+                            color: regular,
+                            size: 36,
+                          ),
+                          FaIcon(
+                            FontAwesomeIcons.solidSmile,
+                            color: good,
+                            size: 36,
+                          ),
+                          FaIcon(
+                            FontAwesomeIcons.solidGrinBeam,
+                            color: excelent,
+                            size: 36,
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+            },
+            child: Container(color: Colors.blueAccent),
+          )
+        : DissabledGreyContainer();
   }
+}
+
+class DissabledGreyContainer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Container(color: Colors.grey);
 }
 
 class DayNumberColumn extends StatelessWidget {
