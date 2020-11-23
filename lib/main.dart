@@ -22,20 +22,19 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => injector.sl<PixelsinyearsCubit>()..getPixelList(),
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          home: HomePage()
-          // home: AnimatedSplashScreen(
-          //   nextScreen: HomePage(),
-          //   splash: "assets/splash.png",
-          //   splashTransition: SplashTransition.fadeTransition,
-          //   pageTransitionType: PageTransitionType.fade,
-          // ),
-          ),
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: AnimatedSplashScreen(
+          nextScreen: HomePage(),
+          splash: "assets/splash.png",
+          splashTransition: SplashTransition.fadeTransition,
+          pageTransitionType: PageTransitionType.fade,
+        ),
+      ),
     );
   }
 }

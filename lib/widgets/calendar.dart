@@ -77,7 +77,6 @@ class CustomButton extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (_) {
-                    // String dateKey = sanityze(month, day);
                     bool isUpdated = contains(pixelList, dateKey) != null;
                     return AlertDialog(
                       contentPadding: EdgeInsets.all(10),
@@ -166,8 +165,6 @@ class DayNumberColumn extends StatelessWidget {
     );
   }
 }
-
-//Meses con 30 días: Abril, Junio, Septiembre y Noviembre.
 
 bool isDateValid(int year, int month, int day) {
   if (month > 12 || day > 31) return false;

@@ -18,7 +18,6 @@ void main() {
     note: PixelState.REGULAR,
   );
   setUp(() {
-    //
     mockPixelDataSource = MockPixelDataSource();
     pixelRepositoryImpl = PixelRepositoryImpl(
       mockPixelDataSource,
