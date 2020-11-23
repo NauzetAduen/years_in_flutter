@@ -56,10 +56,7 @@ class _HomePageState extends State<HomePage> {
               return Center(child: CircularProgressIndicator());
             } else if (state is PixelsinyearsLoaded) {
               return Center(child: Calendar(state.pixelList));
-              // return Text("HI");
-            }
-            if (state is PixelUpdatedOrCreated) {
-              print("StatePixelUpdated-- : ${state.pixelList.length}");
+            } else if (state is PixelUpdatedOrCreated) {
               return Center(child: Calendar(state.pixelList));
             }
             return Text((state as PixelsinyearsError).message);

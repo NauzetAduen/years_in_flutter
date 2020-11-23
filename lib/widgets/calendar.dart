@@ -127,7 +127,6 @@ class ColoredContainer extends StatelessWidget {
   const ColoredContainer(this.dateKey, this.pixelList);
   @override
   Widget build(BuildContext context) {
-    print("Colord container lisst lenght: ${pixelList.length}");
     final result = contains(pixelList, dateKey);
     if (result != null) {
       return Container(
@@ -142,7 +141,6 @@ class ColoredContainer extends StatelessWidget {
 
 PixelState contains(List<Pixel> pixelList, String dateKey) {
   for (Pixel pixel in pixelList) {
-    // print("${pixel.date.getFormatedTime()}  -- $dateKey");
     if (pixel.date.getFormatedTime() == dateKey) {
       return pixel.note;
     }

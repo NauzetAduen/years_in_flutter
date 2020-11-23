@@ -42,7 +42,6 @@ class PixelsinyearsCubit extends Cubit<PixelsinyearsState> {
     //TODO GET THE LIST BEFORE EMITING
     // emit(const PixelsinyearsLoading());
     final result = await pixelRepository.createPixel(pixel);
-    print("CALING CREATE PIXEL");
     result.fold(
         (failure) => emit(const PixelsinyearsError(databaseFailureMessage)),
         (result) {
