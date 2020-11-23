@@ -27,14 +27,22 @@ class PixelsinyearsCubit extends Cubit<PixelsinyearsState> {
   }
 
   Future<void> updatePixel(Pixel pixel) async {
-    emit(const PixelsinyearsLoading());
+    // emit(const PixelsinyearsLoading());
     final result = await pixelRepository.updatePixel(pixel);
 
     result.fold(
         (failure) => emit(const PixelsinyearsError(databaseFailureMessage)),
         (result) {
-      List<Pixel> list = (state as PixelUpdatedOrCreated).pixelList;
-      emit(PixelUpdatedOrCreated(list));
+      List<Pixel> newList = [];
+
+      //smart casting
+      if (state is PixelsinyearsLoaded) newList.addAll(state.pixelList);
+
+      if (state is PixelUpdatedOrCreated) newList.addAll(state.pixelList);
+
+      newList.removeWhere((element) => element.date == pixel.date);
+      newList.add(pixel);
+      emit(PixelUpdatedOrCreated(newList));
     });
   }
 
@@ -53,6 +61,7 @@ class PixelsinyearsCubit extends Cubit<PixelsinyearsState> {
       if (state is PixelUpdatedOrCreated) newList.addAll(state.pixelList);
 
       newList.add(pixel);
+
       emit(PixelUpdatedOrCreated(newList));
     });
   }

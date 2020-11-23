@@ -78,6 +78,7 @@ class CustomButton extends StatelessWidget {
                   context: context,
                   builder: (_) {
                     // String dateKey = sanityze(month, day);
+                    bool isUpdated = contains(pixelList, dateKey) != null;
                     return AlertDialog(
                       contentPadding: EdgeInsets.all(10),
                       title: Text(
@@ -88,15 +89,15 @@ class CustomButton extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           CustomButtomIcon(FontAwesomeIcons.solidSadTear,
-                              PixelState.AWFUL, dateKey),
+                              PixelState.AWFUL, dateKey, isUpdated),
                           CustomButtomIcon(FontAwesomeIcons.solidFrownOpen,
-                              PixelState.BAD, dateKey),
+                              PixelState.BAD, dateKey, isUpdated),
                           CustomButtomIcon(FontAwesomeIcons.solidMeh,
-                              PixelState.REGULAR, dateKey),
+                              PixelState.REGULAR, dateKey, isUpdated),
                           CustomButtomIcon(FontAwesomeIcons.solidSmile,
-                              PixelState.GOOD, dateKey),
+                              PixelState.GOOD, dateKey, isUpdated),
                           CustomButtomIcon(FontAwesomeIcons.solidGrinBeam,
-                              PixelState.EXCELENT, dateKey),
+                              PixelState.EXCELENT, dateKey, isUpdated),
                         ],
                       ),
                     );
@@ -188,19 +189,24 @@ class CustomButtomIcon extends StatelessWidget {
   final IconData icon;
   final PixelState state;
   final String dateKey;
+  final bool isUpdate;
 
-  const CustomButtomIcon(this.icon, this.state, this.dateKey);
+  const CustomButtomIcon(this.icon, this.state, this.dateKey, this.isUpdate);
 
   @override
   Widget build(BuildContext context) {
+    print("$icon - $isUpdate");
     return BlocListener<PixelsinyearsCubit, PixelsinyearsState>(
       listener: (context, s) {},
       cubit: PixelsinyearsCubit(sl()),
       child: GestureDetector(
         onTap: () async {
-          //TODO (2) USE Update or ADD
           Pixel pixel = Pixel(date: dateKey.getDateFromString(), note: state);
-          await context.read<PixelsinyearsCubit>().createPixel(pixel);
+          if (isUpdate)
+            await context.read<PixelsinyearsCubit>().updatePixel(pixel);
+          else
+            await context.read<PixelsinyearsCubit>().createPixel(pixel);
+
           Navigator.pop(context);
         },
         child: FaIcon(
