@@ -20,4 +20,15 @@ As a demo project, a lot of functionalities will be missed.
 - As you change a pixel, it will be stored in a local database
   - As for right now, I'm choosing between hive or sqflite
 
+# main view
 
+<img src="screenshots/pixels.png" width="150"/>
+
+# dialog
+<img src="screenshots/dialog.png" width="150"/>
+
+# what's left
+- years
+- styling
+- loading state with animations?
+- refactoring / clean code...
