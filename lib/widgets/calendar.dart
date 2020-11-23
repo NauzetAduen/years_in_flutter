@@ -217,11 +217,11 @@ class CustomButtomIcon extends StatelessWidget {
 }
 
 Color _getColor(PixelState state) {
-  if (state.index == 0) return awful;
-  if (state.index == 1) return bad;
+  if (state.index == 0) return excelent;
+  if (state.index == 1) return good;
   if (state.index == 2) return regular;
-  if (state.index == 3) return good;
-  return excelent;
+  if (state.index == 3) return bad;
+  return awful;
 }
 
 bool isLeapYear(int year) =>
