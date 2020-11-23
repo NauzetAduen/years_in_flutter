@@ -47,9 +47,8 @@ class PixelDatasourceImpl implements PixelDatasource {
     final Map<String, dynamic> map = Map<String, dynamic>.from(
         (await hiveInterface.openBox(boxName)).toMap());
 
-    //TODO
+    //TODO (4)
     //better way to do this?
-
     map.forEach((key, value) {
       list.add(
         Pixel(

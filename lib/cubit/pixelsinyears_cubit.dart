@@ -10,6 +10,7 @@ const String databaseFailureMessage = "The database has produced an error";
 
 class PixelsinyearsCubit extends Cubit<PixelsinyearsState> {
   final PixelRepository pixelRepository;
+  // List<Pixel> pixelList;
   PixelsinyearsCubit(this.pixelRepository) : super(PixelsinyearsLoading());
 
 //TODO (1) ADD REST OF FUNCTIONS
@@ -19,7 +20,10 @@ class PixelsinyearsCubit extends Cubit<PixelsinyearsState> {
 
     result.fold(
         (failure) => emit(const PixelsinyearsError(databaseFailureMessage)),
-        (list) => emit(PixelsinyearsLoaded(list)));
+        (list) {
+      // pixelList = list;
+      emit(PixelsinyearsLoaded(list));
+    });
   }
 
   Future<void> updatePixel(Pixel pixel) async {
@@ -28,15 +32,29 @@ class PixelsinyearsCubit extends Cubit<PixelsinyearsState> {
 
     result.fold(
         (failure) => emit(const PixelsinyearsError(databaseFailureMessage)),
-        (result) => emit(const PixelUpdatedOrCreated()));
+        (result) {
+      List<Pixel> list = (state as PixelUpdatedOrCreated).pixelList;
+      emit(PixelUpdatedOrCreated(list));
+    });
   }
 
   Future<void> createPixel(Pixel pixel) async {
-    emit(const PixelsinyearsLoading());
+    //TODO GET THE LIST BEFORE EMITING
+    // emit(const PixelsinyearsLoading());
     final result = await pixelRepository.createPixel(pixel);
-
+    print("CALING CREATE PIXEL");
     result.fold(
         (failure) => emit(const PixelsinyearsError(databaseFailureMessage)),
-        (result) => emit(const PixelUpdatedOrCreated()));
+        (result) {
+      List<Pixel> newList = [];
+
+      //smart casting
+      if (state is PixelsinyearsLoaded) newList.addAll(state.pixelList);
+
+      if (state is PixelUpdatedOrCreated) newList.addAll(state.pixelList);
+
+      newList.add(pixel);
+      emit(PixelUpdatedOrCreated(newList));
+    });
   }
 }

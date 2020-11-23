@@ -19,20 +19,24 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: HomePage()
-        // home: AnimatedSplashScreen(
-        //   nextScreen: HomePage(),
-        //   splash: "assets/splash.png",
-        //   splashTransition: SplashTransition.fadeTransition,
-        //   pageTransitionType: PageTransitionType.fade,
-        // ),
-        );
+    return BlocProvider(
+      create: (context) => injector.sl<PixelsinyearsCubit>()..getPixelList(),
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          home: HomePage()
+          // home: AnimatedSplashScreen(
+          //   nextScreen: HomePage(),
+          //   splash: "assets/splash.png",
+          //   splashTransition: SplashTransition.fadeTransition,
+          //   pageTransitionType: PageTransitionType.fade,
+          // ),
+          ),
+    );
   }
 }
 
@@ -44,29 +48,24 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Years in Flutter"),
-        centerTitle: true,
-      ),
-      // body: Calendar(),
-      body: BlocProvider(
-        create: (context) => injector.sl<PixelsinyearsCubit>()..getPixelList(),
-        child: BlocBuilder<PixelsinyearsCubit, PixelsinyearsState>(
-            builder: (context, state) {
-          if (state is PixelsinyearsLoading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state is PixelsinyearsLoaded) {
-            return Center(child: Calendar());
-          }
-          return Text((state as PixelsinyearsError).message);
-        }),
+    return SafeArea(
+      child: Scaffold(
+        body: BlocBuilder<PixelsinyearsCubit, PixelsinyearsState>(
+          builder: (context, state) {
+            if (state is PixelsinyearsLoading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state is PixelsinyearsLoaded) {
+              return Center(child: Calendar(state.pixelList));
+              // return Text("HI");
+            }
+            if (state is PixelUpdatedOrCreated) {
+              print("StatePixelUpdated-- : ${state.pixelList.length}");
+              return Center(child: Calendar(state.pixelList));
+            }
+            return Text((state as PixelsinyearsError).message);
+          },
+        ),
       ),
     );
   }
 }
-
-//TODO
-//Commits on Mar 11, 2020
-//resocoder video cubits : https://www.youtube.com/watch?v=y564ETOCog8
-// cubits 12:55 -> 35:55
