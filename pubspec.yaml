@@ -13,19 +13,25 @@ dependencies:
     sdk: flutter
 
   flutter_bloc:
-  # animated_splash: ^1.0.0 
   animated_splash_screen: ^1.0.1+2
+  equatable: 
+  dartz:
+  intl:
+  hive: ^1.4.4+1
+  hive_flutter: ^0.3.1
+  get_it: ^5.0.1
+  font_awesome_flutter:
 
   cupertino_icons: ^1.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mockito:
 
 flutter:
 
   uses-material-design: true
-
 
   assets:
     - assets/splash.png
